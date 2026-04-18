@@ -3,6 +3,8 @@ spring:
     name: hhc-ai-agent
   profiles:
     active: local
+  main:
+    allow-bean-definition-overriding: true
   ai:
     ollama:
       base-url: http://localhost:11434
