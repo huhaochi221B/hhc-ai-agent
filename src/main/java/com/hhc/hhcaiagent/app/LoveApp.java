@@ -125,7 +125,6 @@ public class LoveApp {
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
 
                 .advisors(new MyLoggerAdvisor())
-
                 .advisors(loveAppRagCloudAdvisor)
                 .call()
                 .chatResponse();

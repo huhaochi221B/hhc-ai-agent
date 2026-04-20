@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 配置云知识库
+ */
 @Configuration
 @Slf4j
 class LoveAppRagCloudAdvisorConfig {
 
-    @Value("sk-f151b55f72ce43519539055a530cc363")
+    @Value("${spring.ai.dashscope.api-key}")
     private String dashScopeApiKey;
 
     @Bean

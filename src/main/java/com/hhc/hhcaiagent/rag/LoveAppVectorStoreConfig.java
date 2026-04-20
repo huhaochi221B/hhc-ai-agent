@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 3.向量转换和存储
+ * 向量配置
  */
 @Configuration
 public class LoveAppVectorStoreConfig {
