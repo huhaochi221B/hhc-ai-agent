@@ -7,6 +7,7 @@ spring:
     allow-bean-definition-overriding: true
   ai:
     ollama:
+      enable: false
       base-url: http://localhost:11434
       chat:
         model: qwen3.5:9b
@@ -45,4 +46,6 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名
       logic-delete-value: 1 #逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 #逻辑未删除值(默认为 0)
-
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimilarityAdvisor: debug
