@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * Springai框架方式调用ai
  */
-@Component
+
 public class OllamaAiInnvoke implements CommandLineRunner {
     @Resource
     private ChatModel ollamaChatModel;

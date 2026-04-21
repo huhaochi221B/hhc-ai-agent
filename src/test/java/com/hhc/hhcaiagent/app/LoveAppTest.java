@@ -13,11 +13,6 @@ import java.util.UUID;
 
 
 @SpringBootTest
-@EnableAutoConfiguration(exclude = {
-        DataSourceAutoConfiguration.class,
-        DataSourceTransactionManagerAutoConfiguration.class,
-        TransactionAutoConfiguration.class
-})
 class LoveAppTest {
 
     @Resource
@@ -57,13 +52,6 @@ class LoveAppTest {
         Assertions.assertNotNull(answer);
     }
 
-    @Test
-    void doChatWithRagCloud() {
-        String chatId = UUID.randomUUID().toString();
-        String message = "我已经结婚了，但是婚后关系不太亲密，怎么办？";
-        String answer =  loveApp.doChatWithRagCloud(message, chatId);
-        Assertions.assertNotNull(answer);
-    }
 
 
 }

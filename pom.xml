@@ -69,23 +69,17 @@
             <version>1.0.0-M6.1</version>
         </dependency>
         <!-- https://java2ai.com/docs/1.0.0-M6.1/models/ollama -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ai</groupId>-->
-<!--            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>-->
-<!--            <version>1.0.0-M6</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
         <!-- LangChain4J DashScope -->
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-community-dashscope</artifactId>
             <version>1.0.0-beta2</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ai</groupId>-->
-<!--            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>-->
-<!--            <version>1.0.0-M6</version>-->
-<!--        </dependency>-->
 <!--MyBatisPlus-->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -108,6 +102,27 @@
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-markdown-document-reader</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+<!--自动整合pgvector向量存储，只用 dashscope 的方式-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-starter-vector-store-pgvector</artifactId>-->
+<!--            <version>1.0.0-M7</version>-->
+<!--        </dependency>-->
+<!--手动整合 pgvector ，因为本项目有ollama和dashscope同时存在-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-pgvector-store</artifactId>
             <version>1.0.0-M6</version>
         </dependency>
 

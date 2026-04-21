@@ -3,7 +3,9 @@ package com.hhc.hhcaiagent.app;
 
 import com.hhc.hhcaiagent.advisor.MyLoggerAdvisor;
 import com.hhc.hhcaiagent.chatmemory.FileBasedChatMemory;
+import com.hhc.hhcaiagent.rag.LoveAppRagCustomAdvisorFactory;
 import com.hhc.hhcaiagent.rag.LoveAppVectorStoreConfig;
+import com.hhc.hhcaiagent.rag.QueryRewriter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -28,6 +30,18 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 public class LoveApp {
 
     private final ChatClient chatClient;
+
+    @Resource
+    private Advisor loveAppRagCloudAdvisor;
+
+    @Resource
+    private VectorStore pgVectorVectorStore;
+
+    @Resource
+    private QueryRewriter  queryRewriter;
+
+    @Resource
+    private VectorStore loveAppVectorStore;
 
     private static final String SYSTEM_PROMPT = "扮演深耕恋爱心理领域的专家。开场向用户表明身份，告知用户可倾诉恋爱难题。" +
             "围绕单身、恋爱、已婚三种状态提问：单身状态询问社交圈拓展及追求心仪对象的困扰；" +
@@ -98,39 +112,36 @@ public class LoveApp {
         return loveReport;
     }
 
-    @Resource
-    private VectorStore loveAppVectorStore;
+
 
     public String doChatWithRag(String message, String chatId) {
+        //查询重写
+        String rewrittenMessage = queryRewriter.doQueryRewrite(message);
         ChatResponse chatResponse = chatClient
                 .prompt()
-                .user(message)
+                //使用重写后的信息查询
+                .user(rewrittenMessage)
                 .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
-                .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
-                .call()
-                .chatResponse();
-        String content = chatResponse.getResult().getOutput().getText();
-        log.info("content: {}", content);
-        return content;
-    }
-    @Resource
-    private Advisor loveAppRagCloudAdvisor;
-
-    public String doChatWithRagCloud(String message, String chatId) {
-        ChatResponse chatResponse = chatClient
-                .prompt()
-                .user(message)
-                .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
-                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
-
                 .advisors(new MyLoggerAdvisor())
-                .advisors(loveAppRagCloudAdvisor)
+                //应用RAG知识库问答
+//                .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
+                //应用 RAG 检索增强服务（基于云知识库）
+//                .advisors(loveAppRagCloudAdvisor)
+                //应用 RAG 检索增强服务（基于 PgVector 向量存储）
+//                .advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
+                .advisors(
+                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
+                                loveAppVectorStore,"单身"
+                        )
+                )
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
         log.info("content: {}", content);
         return content;
     }
+
+
 
 }
