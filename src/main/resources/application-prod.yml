@@ -2,7 +2,7 @@ spring:
   application:
     name: hhc-ai-agent
   profiles:
-    active: prod
+    active: local
   main:
     allow-bean-definition-overriding: true
   ai:
@@ -11,14 +11,25 @@ spring:
       chat:
         model: qwen3.5:9b
         enabled: false
-    mcp:
-      client:
-#        stdio:
-#          servers-configuration: classpath:mcp-servers.json
-        sse:
-          connections:
-            server1:
-              url: http://localhost:8127
+    dashscope:
+      api-key: sk-f151b55f72ce43519539055a530cc363
+      #      api-key: 836d4c54cc46272cdb18bc06bb784792:OWMzOTZjZjdmN2VkZDc4MGRmZDcyZDcy
+      chat:
+        options:
+          model: qwen-turbo
+#    mcp:
+#      client:
+##        stdio:
+##          servers-configuration: classpath:mcp-servers.json
+#        sse:
+#          connections:
+#            server1:
+#              url: http://localhost:8127
+
+  datasource:
+    url: jdbc:postgresql://62.234.172.11/hhc-ai-agent
+    username: postgres
+    password: anything221B
 
 #    vectorstore:
 #      pgvector:
@@ -64,5 +75,9 @@ mybatis-plus:
 logging:
   level:
     org.springframework.ai.chat.client.advisor.SimilarityAdvisor: debug
+
+
+#searchApikey:
 search-api:
-  api-key: 你的apikey
+  api-key: 3inxqnVHQRhXYUf69GzFtPtL
+
