@@ -1,6 +1,5 @@
 package com.hhc.hhcaiagent.tools;
 
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.ai.tool.annotation.Tool;
